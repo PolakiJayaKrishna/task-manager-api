@@ -32,4 +32,31 @@ public class TaskService {
     public List<Task> findAllTask(){
         return repository.findAll();
     }
+
+    public Task getByTaskId(long id){
+        if(repository.existsById(id))
+            return repository.findById(id).get();
+        else
+            return null;
+    }
+
+    public Task updateTask(Long id , Task newData){
+        if(repository.existsById(id)) {
+            Task existingTask = repository.findById(id).orElse(null);
+            existingTask.setTitle(newData.getTitle());
+            existingTask.setDescription(newData.getDescription());
+            existingTask.setStatus(newData.getStatus());
+            existingTask.setUpdatedAt(LocalDateTime.now());
+            return repository.save(existingTask);
+        }
+        return null;
+    }
+
+    public String deleteById(long id){
+        if(repository.existsById(id)){
+            repository.deleteById(id);
+            return "Task Deleted Successfully..!";
+        }
+        return  "Task Not found!";
+    }
 }
