@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -17,10 +18,7 @@ public class TaskService {
     private TaskRepository repository;
 
 
-    public Task createTask(String title , String description){
-        Task task = new Task();
-        task.setTitle(title);
-        task.setDescription(description);
+    public Task createTask(Task task) {
         task.setStatus(TaskStatus.PENDING);
         LocalDateTime now = LocalDateTime.now();
         task.setCreatedAt(now);
@@ -29,34 +27,33 @@ public class TaskService {
     }
 
 
+
     public List<Task> findAllTask(){
         return repository.findAll();
     }
 
-    public Task getByTaskId(long id){
-        if(repository.existsById(id))
-            return repository.findById(id).get();
-        else
-            return null;
+    public Task findByTaskId(long id){
+        return repository.findById(id).orElse(null);
     }
 
-    public Task updateTask(Long id , Task newData){
-        if(repository.existsById(id)) {
-            Task existingTask = repository.findById(id).orElse(null);
-            existingTask.setTitle(newData.getTitle());
-            existingTask.setDescription(newData.getDescription());
-            existingTask.setStatus(newData.getStatus());
+    public Task updateTask(Long id , Task updatedTask){
+        Optional<Task> existingOptionalTask = repository.findById(id);
+        if(existingOptionalTask.isPresent()){
+            Task existingTask = existingOptionalTask.get();
+            existingTask.setTitle(updatedTask.getTitle());
+            existingTask.setDescription(updatedTask.getDescription());
             existingTask.setUpdatedAt(LocalDateTime.now());
             return repository.save(existingTask);
         }
         return null;
     }
 
-    public String deleteById(long id){
-        if(repository.existsById(id)){
+    public boolean deleteById(long id){
+        if(repository.existsById(id)) {
             repository.deleteById(id);
-            return "Task Deleted Successfully..!";
+            return true;                                    // true -> Deleted
         }
-        return  "Task Not found!";
+        return false;                                       //false -> Not found
     }
+
 }

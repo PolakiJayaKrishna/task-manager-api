@@ -1,93 +1,177 @@
-# 📝 Task Manager API
+# Task Manager API 📝
 
-A simple **Task Manager REST API** built using Spring Boot.  
-This project demonstrates how to build and test full CRUD features using:
-
-- Spring Boot
-- Spring Web
-- Spring Data JPA
-- H2 In-Memory Database
-- Postman
+A clean and practical Spring Boot REST API built as part of backend learning — using proper ResponseEntity responses and REST standards.
 
 ---
 
-## 📌 What This Project Covers
+## 🚀 Tech Used
 
-✔ REST API design  
-✔ Layered architecture  
-✔ CRUD operations  
-✔ JSON request handling  
-✔ Postman API testing
+| Technology     | Purpose          |
+|----------------|------------------|
+| Java           | Language         |
+| Spring Boot    | Framework        |
+| Spring Web     | REST API         |
+| Spring Data JPA| Database layer   |
+| H2             | In-memory DB     |
+| Maven          | Build tool       |
+| Postman        | API testing      |
 
-Architecture used:
+
+---
+
+## 📦 Features
+
+- Create tasks
+- Get all tasks
+- Get task by ID
+- Update task
+- Delete task
+- Meaningful HTTP responses (201, 200, 204, 404)
+
+---
+
+## 🏗 Architecture
 
 ```
-Client → Controller → Service → Repository → Database
+Client → Controller → Service → Repository → DB
 ```
 
 ---
 
-## 🚀 API Endpoints
+## 📁 Project Structure
 
-| Method  | Endpoint        | Description          |
-|---------|-----------------|----------------------|
-| `POST`  | `/tasks`        | Create a new task    |
-| `GET`   | `/tasks`        | Get all tasks        |
-| `GET`   | `/tasks/{id}`   | Get task by ID       |
-| `PUT`   | `/tasks/{id}`   | Update a task        |
-| `DELETE`| `/tasks/{id}`   | Delete a task        |
-
-
----
-
-## 🧪 Postman Testing Screenshots
-
-### 📍 Create Task (POST)
-![Create Task](./screenshots/post-create-task.png)
-
----
-
-### 📍 Get All Tasks (GET)
-![Get All Tasks](./screenshots/get-all-tasks.png)
-
----
-
-### 📍 Get Task by ID (GET)
-![Get One Task](./screenshots/get-task-by-id.png)
-
----
-
-### 📍 Update Task (PUT)
-![Update Task](./screenshots/update-task.png)
-
----
-
-### 📍 Delete Task (DELETE)
-![Delete Task](./screenshots/delete-task.png)
-
----
-
-## ▶️ How to Run This Project
-
-1️⃣ Clone the repository:
-
-```sh
-git clone https://github.com/PolakiJayaKrishna/task-manager-api.git
+```
+task-manager-api
+ ├─ src
+ ├─ docs
+ │   └─ screenshots
+ ├─ pom.xml
+ └─ README.md
 ```
 
-2️⃣ Navigate into the project folder:
+---
 
-```sh
-cd task-manager-api
+## 🛠 API Endpoints
+
+| Method | Endpoint        | Description          | Success Code    | Error Code        |
+|--------|-----------------|----------------------|-----------------|-------------------|
+| POST   | `/tasks`        | Create task          | `201 CREATED`   | -                 |
+| GET    | `/tasks`        | Get all tasks        | `200 OK`        | -                 |
+| GET    | `/tasks/{id}`   | Get task by ID       | `200 OK`        | `404 NOT FOUND`   |
+| PUT    | `/tasks/{id}`   | Update task by ID    | `200 OK`        | `404 NOT FOUND`   |
+| DELETE | `/tasks/{id}`   | Delete task by ID    | `204 NO CONTENT`| `404 NOT FOUND`   |
+
+
+
+---
+
+## 📮 Request/Response Examples
+
+### ▶ Create Task (`POST /tasks`)
+
+Request:
+
+```json
+{
+  "title": "Example Task",
+  "description": "Testing ResponseEntity"
+}
 ```
 
-3️⃣ Run the project using Maven:
+Response:
 
-```sh
+```json
+{
+  "title": "Example Task",
+  "description": "Testing ResponseEntity",
+  "status": "PENDING",
+  "createdAt": "2025-12-02T15:47:16.548407",
+  "updatedAt": "2025-12-02T15:47:16.548407",
+  "id": 1
+}
+```
+
+📷 Screenshot:  
+`docs/screenshots/post-create.png`
+
+---
+
+### ▶ Get All Tasks (`GET /tasks`)
+
+Response:
+
+```json
+[
+  {
+    "id": 1,
+    "title": "Example Task",
+    "description": "Testing ResponseEntity",
+    "status": "PENDING",
+    "createdAt": "...",
+    "updatedAt": "..."
+  }
+]
+```
+
+📷 Screenshot:  
+`docs/screenshots/get-all.png`
+
+---
+
+### ▶ Get Task by ID (`GET /tasks/{id}`)
+
+📷 Screenshot:  
+`docs/screenshots/get-by-id.png`
+
+---
+
+### ▶ Update Task (`PUT /tasks/{id}`)
+
+📷 Screenshot:  
+`docs/screenshots/update.png`
+
+---
+
+### ▶ Delete Task (`DELETE /tasks/{id}`)
+
+📷 Screenshot:  
+`docs/screenshots/delete.png`
+
+---
+
+## 🧩 Model Design
+
+### `Task.java`
+
+```
+| Field      | Type          |
+|------------|---------------|
+| id         | Long          |
+| title      | String        |
+| description| String        |
+| status     | TaskStatus    |
+| createdAt  | LocalDateTime |
+| updatedAt  | LocalDateTime |
+```
+
+### `TaskStatus.java`
+
+```java
+public enum TaskStatus {
+    PENDING,
+    COMPLETED
+}
+```
+
+---
+
+## ▶ Run the project
+
+```bash
 mvn spring-boot:run
 ```
 
-4️⃣ Application runs at:
+Base URL:
 
 ```
 http://localhost:8080
@@ -95,49 +179,31 @@ http://localhost:8080
 
 ---
 
-## 📂 Entity Structure
+## 📌 Current Progress
 
-```
-Task
- ├── id: Long
- ├── title: String
- ├── description: String
- ├── status: PENDING | COMPLETED
- ├── createdAt: LocalDateTime
- └── updatedAt: LocalDateTime
-```
+| Feature         | Status       |
+|----------------|-------------|
+| CRUD           | ✅ Completed |
+| ResponseEntity | ✅ Completed |
+| Validation     | ⏳ Next      |
+| DTO + Mapping  | ⏳ Planned   |
+| Swagger Docs   | ⏳ Planned   |
+| Deployment     | ⏳ Planned   |
+---
+
+## 🎯 Next Goals
+
+- Add validation (`@NotNull`, `@Size`, custom messages)
+- Global exception handling
+- DTO refactoring
+- Swagger documentation
 
 ---
 
-## ✔ Current Status
+## 🏁 Summary
 
-| Feature           | Status   |
-|------------------|----------|
-| Create Task      | ✔ Done   |
-| Get All Tasks    | ✔ Done   |
-| Get Task by ID   | ✔ Done   |
-| Update Task      | ✔ Done   |
-| Delete Task      | ✔ Done   |
-
+This is a fully working backend CRUD app following proper REST conventions — built step by step with clean architecture and real-world response handling.
 
 ---
 
-## 🎯 Next Phase (Future Improvements)
-
-🔹 DTOs  
-🔹 Validation rules  
-🔹 Global exception handling  
-🔹 Swagger / OpenAPI documentation  
-🔹 MySQL support
-
----
-
-### ✨ Summary
-
-This is a complete beginner-friendly CRUD project built using Spring Boot following clean architecture and REST principles.  
-It serves as a strong foundation for more advanced backend development.
-
----
-
-🙏 **Thank you for exploring this project.**
-
+**⭐️ Keep improving. Next step: Validation.**
