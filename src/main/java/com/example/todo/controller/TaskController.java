@@ -2,6 +2,7 @@ package com.example.todo.controller;
 
 import com.example.todo.model.Task;
 import com.example.todo.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ public class TaskController {
     private TaskService service;
 
     @PostMapping("/tasks")
-    public ResponseEntity<Task> createTask(@RequestBody Task task){
+    public ResponseEntity<Task> createTask(@Valid  @RequestBody Task task){
         Task savedTask = service.createTask(task);
         return ResponseEntity.status(201).body(savedTask);
     }

@@ -6,7 +6,7 @@ A clean and practical Spring Boot REST API built as part of backend learning —
 
 ## 🚀 Tech Used
 
-| Technology     | Purpose          |
+| Technology      | Purpose          |
 |----------------|------------------|
 | Java           | Language         |
 | Spring Boot    | Framework        |
@@ -15,7 +15,6 @@ A clean and practical Spring Boot REST API built as part of backend learning —
 | H2             | In-memory DB     |
 | Maven          | Build tool       |
 | Postman        | API testing      |
-
 
 ---
 
@@ -27,6 +26,7 @@ A clean and practical Spring Boot REST API built as part of backend learning —
 - Update task
 - Delete task
 - Meaningful HTTP responses (201, 200, 204, 404)
+- Validation with custom error messages
 
 ---
 
@@ -53,15 +53,13 @@ task-manager-api
 
 ## 🛠 API Endpoints
 
-| Method | Endpoint        | Description          | Success Code    | Error Code        |
-|--------|-----------------|----------------------|-----------------|-------------------|
-| POST   | `/tasks`        | Create task          | `201 CREATED`   | -                 |
-| GET    | `/tasks`        | Get all tasks        | `200 OK`        | -                 |
-| GET    | `/tasks/{id}`   | Get task by ID       | `200 OK`        | `404 NOT FOUND`   |
-| PUT    | `/tasks/{id}`   | Update task by ID    | `200 OK`        | `404 NOT FOUND`   |
-| DELETE | `/tasks/{id}`   | Delete task by ID    | `204 NO CONTENT`| `404 NOT FOUND`   |
-
-
+| Method  | Endpoint       | Description        | Success Code      | Error Code       |
+|---------|---------------|--------------------|------------------|------------------|
+| POST    | `/tasks`      | Create task        | `201 CREATED`    | `400 BAD REQUEST`|
+| GET     | `/tasks`      | Get all tasks      | `200 OK`         | -                |
+| GET     | `/tasks/{id}` | Get task by ID     | `200 OK`         | `404 NOT FOUND`  |
+| PUT     | `/tasks/{id}` | Update task by ID  | `200 OK`         | `400 / 404`      |
+| DELETE  | `/tasks/{id}` | Delete task by ID  | `204 NO CONTENT` | `404 NOT FOUND`  |
 
 ---
 
@@ -91,8 +89,38 @@ Response:
 }
 ```
 
-📷 Screenshot:  
+📸 Screenshot:  
 `docs/screenshots/post-create.png`
+
+---
+
+### ❌ Validation Error Example
+
+If the request body does not follow validation rules (example: empty fields),  
+the API responds with a structured error message.
+
+**Request**
+
+```json
+POST /tasks
+{
+  "title": "",
+  "description": ""
+}
+```
+
+**Response**
+
+```json
+{
+  "description": "Description must be between 5 and 200 characters",
+  "title": "Title is required."
+}
+```
+
+📸 Output:
+
+`docs/screenshots/validation-error.png`
 
 ---
 
@@ -113,28 +141,28 @@ Response:
 ]
 ```
 
-📷 Screenshot:  
+📸 Screenshot:  
 `docs/screenshots/get-all.png`
 
 ---
 
 ### ▶ Get Task by ID (`GET /tasks/{id}`)
 
-📷 Screenshot:  
+📸 Screenshot:  
 `docs/screenshots/get-by-id.png`
 
 ---
 
 ### ▶ Update Task (`PUT /tasks/{id}`)
 
-📷 Screenshot:  
+📸 Screenshot:  
 `docs/screenshots/update.png`
 
 ---
 
 ### ▶ Delete Task (`DELETE /tasks/{id}`)
 
-📷 Screenshot:  
+📸 Screenshot:  
 `docs/screenshots/delete.png`
 
 ---
@@ -143,8 +171,7 @@ Response:
 
 ### `Task.java`
 
-```
-| Field      | Type          |
+| Field       | Type          |
 |------------|---------------|
 | id         | Long          |
 | title      | String        |
@@ -152,7 +179,8 @@ Response:
 | status     | TaskStatus    |
 | createdAt  | LocalDateTime |
 | updatedAt  | LocalDateTime |
-```
+
+---
 
 ### `TaskStatus.java`
 
@@ -181,22 +209,14 @@ http://localhost:8080
 
 ## 📌 Current Progress
 
-| Feature         | Status       |
-|----------------|-------------|
+| Feature         | Status      |
+|----------------|------------  |
 | CRUD           | ✅ Completed |
 | ResponseEntity | ✅ Completed |
-| Validation     | ⏳ Next      |
-| DTO + Mapping  | ⏳ Planned   |
+| Validation     | ✅ Added     |
+| DTO + Mapping  | ⏳ Next      |
 | Swagger Docs   | ⏳ Planned   |
 | Deployment     | ⏳ Planned   |
----
-
-## 🎯 Next Goals
-
-- Add validation (`@NotNull`, `@Size`, custom messages)
-- Global exception handling
-- DTO refactoring
-- Swagger documentation
 
 ---
 
@@ -206,4 +226,4 @@ This is a fully working backend CRUD app following proper REST conventions — b
 
 ---
 
-**⭐️ Keep improving. Next step: Validation.**
+**⭐️ Next Step: DTO + Mapping**
