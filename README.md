@@ -42,11 +42,12 @@ Client → Controller → Service → Repository → DB
 
 ```
 task-manager-api
- ├─ src
- ├─ docs
- │   └─ screenshots
+ ├─ src/main/java/... (source code)
+ ├─ src/main/resources/... (config files)
+ ├─ docs/screenshots/ (Postman screenshots)
  ├─ pom.xml
  └─ README.md
+
 ```
 
 ---
