@@ -1,4 +1,4 @@
-package com.example.todo;
+package com.example.todo.exception;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

@@ -1,11 +1,12 @@
 package com.example.todo.service;
 
+import com.example.todo.dto.TaskResponseDTO;
+import com.example.todo.dto.TaskRequestDTO;
 import com.example.todo.model.Task;
 import com.example.todo.model.TaskStatus;
 import com.example.todo.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,12 +19,15 @@ public class TaskService {
     private TaskRepository repository;
 
 
-    public Task createTask(Task task) {
+    public TaskResponseDTO createTask(TaskRequestDTO requestDTO) {
+        Task task = mapToEntity(requestDTO);
         task.setStatus(TaskStatus.PENDING);
         LocalDateTime now = LocalDateTime.now();
         task.setCreatedAt(now);
+
         task.setUpdatedAt(now);
-        return repository.save(task);
+        Task savedTask = repository.save(task);
+        return mapToResponseDTO(savedTask);
     }
 
 
@@ -54,6 +58,23 @@ public class TaskService {
             return true;                                    // true -> Deleted
         }
         return false;                                       //false -> Not found
+    }
+
+    private Task mapToEntity(TaskRequestDTO dto){           // Controller ↔ Service: DTOs
+        Task task = new Task();                             // Request Shape -> Memory Shape
+        task.setTitle(dto.getTitle());
+        task.setDescription(dto.getDescription());
+        return task;
+    }
+    private TaskResponseDTO mapToResponseDTO(Task task){    //Service ↔ Repository: Entities
+        TaskResponseDTO dto = new TaskResponseDTO();        // Memory Shape -> Response Shape
+        dto.setId(task.getId());
+        dto.setTitle(task.getTitle());
+        dto.setDescription(task.getDescription());
+        dto.setStatus(task.getStatus().name());
+        dto.setCreateAt(task.getCreatedAt());
+        dto.setUpdatedAt(task.getUpdatedAt());
+        return dto;
     }
 
 }
