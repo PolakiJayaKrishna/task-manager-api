@@ -6,6 +6,9 @@ import com.example.todo.model.Task;
 import com.example.todo.model.TaskStatus;
 import com.example.todo.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -33,8 +36,10 @@ public class TaskService {
 
 
 
-    public List<TaskResponseDTO> findAllTask(){
-        List<Task> tasks = repository.findAll();
+    public List<TaskResponseDTO> findAllTask(int page , int size){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Task> taskPage = repository.findAll(pageable);
+        List<Task> tasks = taskPage.getContent();
         List<TaskResponseDTO> responseList = new ArrayList<>();
         for(Task task : tasks){
             TaskResponseDTO dto = mapToResponseDTO(task);

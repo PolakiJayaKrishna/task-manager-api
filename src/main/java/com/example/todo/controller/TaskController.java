@@ -23,8 +23,11 @@ public class TaskController {
     }
 
     @GetMapping("/tasks")
-    public ResponseEntity<List<TaskResponseDTO>> findAll() {
-        List<TaskResponseDTO> responseList = service.findAllTask();
+    public ResponseEntity<List<TaskResponseDTO>> findAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ) {
+        List<TaskResponseDTO> responseList = service.findAllTask(page, size);
         return ResponseEntity.ok(responseList);
     }
 
