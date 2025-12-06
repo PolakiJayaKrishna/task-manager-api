@@ -1,6 +1,6 @@
 # Task Manager API 📝
 
-A clean and practical Spring Boot REST API built as part of backend learning — following proper REST conventions, validation, DTO pattern, and meaningful responses.
+A clean and practical Spring Boot REST API built as part of backend learning — following proper REST conventions, validation, DTO pattern, pagination, and meaningful responses.
 
 ---
 
@@ -27,6 +27,7 @@ A clean and practical Spring Boot REST API built as part of backend learning —
 - Delete task
 - DTO (Request + Response)
 - Validation with custom messages
+- Pagination support
 - Global Exception Handling
 - Clean API responses using `ResponseEntity`
 
@@ -46,7 +47,7 @@ Client → Controller → DTO → Service → Repository → Database
 task-manager-api
  ├─ src/main/java/...        (source code)
  ├─ src/main/resources/...   (config files)
- ├─ docs/screenshots/        (Postman screenshots)
+ ├─ screenshots/             (Postman screenshots)
  ├─ pom.xml
  └─ README.md
 ```
@@ -92,7 +93,7 @@ task-manager-api
 ```
 
 📸 Screenshot  
-`docs/screenshots/06-post-success.png`
+`screenshots/06-post-success.png`
 
 ---
 
@@ -106,44 +107,57 @@ task-manager-api
 ```
 
 📸 Screenshot  
-`docs/screenshots/07-post-error.png`
+`screenshots/07-post-error.png`
 
 ---
 
 ### ▶ Get All Tasks (`GET /tasks`)
 
 📸 Screenshot  
-`docs/screenshots/03-get-all.png`
+`screenshots/03-get-all-success.png`
 
 ---
 
 ### ▶ Get Task By ID (`GET /tasks/{id}`)
 
 📸 Success  
-`docs/screenshots/04-get-by-id.png`
+`screenshots/04-get-by-id-success.png`
 
 📸 Not Found  
-`docs/screenshots/05-get-by-id-error.png`
+`screenshots/05-get-by-id-error.png`
 
 ---
 
 ### ▶ Update Task (`PUT /tasks/{id}`)
 
 📸 Success  
-`docs/screenshots/08-put-success.png`
+`screenshots/08-put-success.png`
 
 📸 Error  
-`docs/screenshots/09-put-error.png`
+`screenshots/09-put-error.png`
 
 ---
 
 ### ▶ Delete Task (`DELETE /tasks/{id}`)
 
 📸 Success  
-`docs/screenshots/01-delete-success.png`
+`screenshots/01-delete-success.png`
 
 📸 Not Found  
-`docs/screenshots/02-delete-error.png`
+`screenshots/02-delete-error.png`
+
+---
+
+## 📚 Pagination Examples (`GET /tasks?page=x&size=y`)
+
+📸 Get All By Page  
+`screenshots/getAllByPage.png`
+
+📸 Get All By Pages  
+`screenshots/getAllByPages.png`
+
+📸 Pageable Response  
+`screenshots/getAllTasksByPageable.png`
 
 ---
 
@@ -198,8 +212,13 @@ http://localhost:8080
 | DTO (Request + Response)    | ✅ Completed |
 | Mapping (Entity ↔ DTO)      | ✅ Completed |
 | Postman Testing             | ✅ Completed |
-| Pagination & Sorting        | ⏳ Next      |
-| Swagger Documentation       | ⏳ Planned   |
+| Pagination & Sorting        | ✅ Completed |
+| Swagger Documentation       | ⏳ Next      |
 | Deployment                 | ⏳ Planned   |
 
 ---
+
+### 🏁 Summary
+
+A clean, production-style Spring Boot API demonstrating real-world patterns: DTOs, validation, pagination, and consistent HTTP responses — great for portfolio and future extensions like JWT authentication and deployment.
+
