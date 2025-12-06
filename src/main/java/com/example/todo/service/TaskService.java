@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,24 +33,31 @@ public class TaskService {
 
 
 
-    public List<Task> findAllTask(){
-        return repository.findAll();
-    }
-
-    public Task findByTaskId(long id){
-        return repository.findById(id).orElse(null);
-    }
-
-    public Task updateTask(Long id , Task updatedTask){
-        Optional<Task> existingOptionalTask = repository.findById(id);
-        if(existingOptionalTask.isPresent()){
-            Task existingTask = existingOptionalTask.get();
-            existingTask.setTitle(updatedTask.getTitle());
-            existingTask.setDescription(updatedTask.getDescription());
-            existingTask.setUpdatedAt(LocalDateTime.now());
-            return repository.save(existingTask);
+    public List<TaskResponseDTO> findAllTask(){
+        List<Task> tasks = repository.findAll();
+        List<TaskResponseDTO> responseList = new ArrayList<>();
+        for(Task task : tasks){
+            TaskResponseDTO dto = mapToResponseDTO(task);
+            responseList.add(dto);
         }
-        return null;
+        return responseList;
+    }
+
+    public TaskResponseDTO findByTaskId(long id){
+        Task task  =  repository.findById(id).orElse(null);
+        if(task == null)    return null;
+        return mapToResponseDTO(task);
+    }
+
+    public TaskResponseDTO updateTask(long id , TaskRequestDTO updatedTask){
+        Optional<Task> existingOptionalTask = repository.findById(id);
+        if(existingOptionalTask.isEmpty())  return null;
+        Task existingTask = existingOptionalTask.get();
+        existingTask.setTitle(updatedTask.getTitle());
+        existingTask.setDescription(updatedTask.getDescription());
+        existingTask.setUpdatedAt(LocalDateTime.now());
+        Task savedTask = repository.save(existingTask);
+        return mapToResponseDTO(savedTask);
     }
 
     public boolean deleteById(long id){

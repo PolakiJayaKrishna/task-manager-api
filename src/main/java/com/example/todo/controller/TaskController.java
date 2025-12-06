@@ -1,5 +1,6 @@
 package com.example.todo.controller;
-
+import com.example.todo.dto.TaskRequestDTO;
+import com.example.todo.dto.TaskResponseDTO;
 import com.example.todo.model.Task;
 import com.example.todo.service.TaskService;
 import jakarta.validation.Valid;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class TaskController {
@@ -15,31 +17,31 @@ public class TaskController {
     private TaskService service;
 
     @PostMapping("/tasks")
-    public ResponseEntity<Task> createTask(@Valid  @RequestBody Task task){
-        Task savedTask = service.createTask(task);
-        return ResponseEntity.status(201).body(savedTask);
+    public ResponseEntity<TaskResponseDTO> createTask(@Valid  @RequestBody TaskRequestDTO requestDTO){
+         TaskResponseDTO responseDTO= service.createTask(requestDTO);
+        return ResponseEntity.status(201).body(responseDTO);
     }
 
     @GetMapping("/tasks")
-    public ResponseEntity<List<Task>> findAll() {
-        List<Task> tasks = service.findAllTask();
-        return ResponseEntity.ok(tasks);
+    public ResponseEntity<List<TaskResponseDTO>> findAll() {
+        List<TaskResponseDTO> responseList = service.findAllTask();
+        return ResponseEntity.ok(responseList);
     }
 
     @GetMapping("/tasks/{id}")
-    public ResponseEntity<Task> getById(@PathVariable long id) {
-        Task task = service.findByTaskId(id);
-        if(task !=null)
-            return ResponseEntity.ok(task);                     // if found
+    public ResponseEntity<TaskResponseDTO> getById(@PathVariable long id) {
+        TaskResponseDTO  responseDTO = service.findByTaskId(id);
+        if(responseDTO !=null)
+            return ResponseEntity.ok(responseDTO);                     // if found
         return ResponseEntity.status(404).body(null);           // if not found
     }
 
     @PutMapping("/tasks/{id}")
-    public ResponseEntity<Task> UpdateTaskById(@PathVariable long id ,@RequestBody  Task updatedTask ){
-        Task task = service.updateTask(id , updatedTask);
+    public ResponseEntity<?> UpdateTaskById(@PathVariable long id ,@Valid @RequestBody  TaskRequestDTO updatedTask ){
+        TaskResponseDTO task = service.updateTask(id , updatedTask);
         if(task !=null)
             return ResponseEntity.ok(task);
-        return ResponseEntity.status(404).body(null);
+        return ResponseEntity.status(404).body((Map.of("error" , "Task Not Found...")));
     }
 
     @DeleteMapping("/tasks/{id}")
