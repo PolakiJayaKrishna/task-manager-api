@@ -1,224 +1,258 @@
-# Task Manager API 📝
+# ✅ Task Manager API — Spring Boot Backend Project
 
-A clean and practical Spring Boot REST API built as part of backend learning — following proper REST conventions, validation, DTO pattern, pagination, and meaningful responses.
+A clean, production-style REST API built while learning Spring Boot — implementing CRUD, DTOs, validations, global exception handling, and pagination with proper REST conventions. Designed to be **portfolio-ready** for recruiters.
 
 ---
 
-## 🚀 Tech Used
+## 🚀 Tech Stack
 
-| Technology       | Purpose           |
-|-----------------|-------------------|
-| Java            | Language          |
-| Spring Boot     | Framework         |
-| Spring Web      | REST API          |
-| Spring Data JPA | Database Layer    |
-| H2 Database     | In-memory Storage |
-| Maven           | Build Tool        |
-| Postman         | API Testing       |
+| Technology       | Purpose             |
+|-----------------|---------------------|
+| Java            | Language            |
+| Spring Boot     | Application Framework |
+| Spring Web      | REST API Layer      |
+| Spring Data JPA | Data Access Layer   |
+| H2 Database     | In-Memory Database  |
+| Maven           | Build Tool          |
+| Postman         | API Testing         |
 
 ---
 
 ## 📦 Features
 
-- Create tasks
-- Get all tasks
-- Get task by ID
-- Update task
-- Delete task
-- DTO (Request + Response)
-- Validation with custom messages
-- Pagination support
-- Global Exception Handling
-- Clean API responses using `ResponseEntity`
+- Create, read, update, delete tasks
+- DTOs for request and response models
+- Validation with custom error messages
+- Global exception handling
+- Clean JSON responses using `ResponseEntity`
+- Pagination support with `page` and `size`
+- Enum-based task status (`PENDING`, `COMPLETED`)
+- Layered and testable architecture
 
 ---
 
-## 🏗 Architecture
+## 🏗 Architecture Overview
 
-```
 Client → Controller → DTO → Service → Repository → Database
-```
 
 ---
 
 ## 📁 Project Structure
 
-```
-task-manager-api
- ├─ src/main/java/...        (source code)
- ├─ src/main/resources/...   (config files)
- ├─ screenshots/             (Postman screenshots)
- ├─ pom.xml
- └─ README.md
-```
+    task-manager-api
+    ├─ screenshots/
+    │   ├─ 01-delete-success.png
+    │   ├─ 02-delete-error.png
+    │   ├─ 03-get-all-success.png
+    │   ├─ 04-get-by-id-success.png
+    │   ├─ 05-get-by-id-error.png
+    │   ├─ 06-post-success.png
+    │   ├─ 07-post-error.png
+    │   ├─ 08-put-success.png
+    │   ├─ 09-put-error.png
+    │   ├─ 10-get-all-by-page.png
+    │   ├─ 11-get-all-pages.png
+    │   └─ 12-get-all-tasks-by-pageable.png
+    ├─ src/
+    │   └─ main/
+    │       ├─ java/
+    │       │   └─ com/example/todo/
+    │       │       ├─ controller/
+    │       │       ├─ dto/
+    │       │       ├─ exception/
+    │       │       ├─ model/
+    │       │       ├─ repository/
+    │       │       └─ service/
+    │       └─ resources/
+    ├─ pom.xml
+    └─ README.md
 
 ---
 
 ## 🛠 API Endpoints
 
-| Method | Endpoint        | Description        | Success Status   | Error Status      |
-|--------|-----------------|--------------------|------------------|-------------------|
-| POST   | `/tasks`        | Create Task        | `201 CREATED`    | `400 BAD REQUEST` |
-| GET    | `/tasks`        | Get All Tasks      | `200 OK`         | -                 |
-| GET    | `/tasks/{id}`   | Get Task By ID     | `200 OK`         | `404 NOT FOUND`   |
-| PUT    | `/tasks/{id}`   | Update Task        | `200 OK`         | `400 / 404`       |
-| DELETE | `/tasks/{id}`   | Delete Task        | `204 NO CONTENT` | `404 NOT FOUND`   |
+| Method | Endpoint                    | Description         | Success Status   | Error Status      |
+|--------|-----------------------------|---------------------|------------------|-------------------|
+| POST   | `/tasks`                    | Create Task         | `201 CREATED`    | `400 BAD REQUEST` |
+| GET    | `/tasks`                    | Get All Tasks       | `200 OK`         | -                 |
+| GET    | `/tasks/{id}`              | Get Task By ID      | `200 OK`         | `404 NOT FOUND`   |
+| PUT    | `/tasks/{id}`              | Update Task         | `200 OK`         | `400 / 404`       |
+| DELETE | `/tasks/{id}`              | Delete Task         | `204 NO CONTENT` | `404 NOT FOUND`   |
+| GET    | `/tasks?page=x&size=y`     | Get Tasks (Paged)   | `200 OK`         | -                 |
 
 ---
 
-## 📮 Request/Response Examples
+## 📮 Sample Request & Response
 
-### ▶ Create Task (`POST /tasks`)
+### Create Task — POST `/tasks`
 
-📌 Request
+Request body:
 
-```json
-{
-  "title": "Learn DTO",
-  "description": "Understanding mapping and validation"
-}
-```
+    {
+      "title": "Learn DTO",
+      "description": "Understanding mapping and validation"
+    }
 
-📌 Response
+Successful response (201 Created):
 
-```json
-{
-  "id": 1,
-  "title": "Learn DTO",
-  "description": "Understanding mapping and validation",
-  "status": "PENDING",
-  "createdAt": "2025-12-06T12:42:30.012351",
-  "updatedAt": "2025-12-06T12:42:30.012351"
-}
-```
-
-📸 Screenshot  
-`screenshots/06-post-success.png`
+    {
+      "id": 1,
+      "title": "Learn DTO",
+      "description": "Understanding mapping and validation",
+      "status": "PENDING",
+      "createdAt": "2025-12-06T12:42:30.012351",
+      "updatedAt": "2025-12-06T12:42:30.012351"
+    }
 
 ---
 
-### ❌ Validation Error (POST /tasks)
+### Validation Error Example
 
-```json
-{
-  "description": "Description must be between 5 and 200 Characters",
-  "title": "Title must be between 3 and 50 Characters"
-}
-```
+If invalid data is sent:
 
-📸 Screenshot  
-`screenshots/07-post-error.png`
+    {
+      "title": "",
+      "description": ""
+    }
 
----
+Response (400 Bad Request):
 
-### ▶ Get All Tasks (`GET /tasks`)
-
-📸 Screenshot  
-`screenshots/03-get-all-success.png`
+    {
+      "description": "Description must be between 5 and 200 Characters",
+      "title": "Title must be between 3 and 50 Characters"
+    }
 
 ---
 
-### ▶ Get Task By ID (`GET /tasks/{id}`)
+## 📷 API Demo (Screenshots)
 
-📸 Success  
-`screenshots/04-get-by-id-success.png`
+### 1️⃣ Create Task (POST `/tasks`)
 
-📸 Not Found  
-`screenshots/05-get-by-id-error.png`
+**Success**
 
----
+![Create Task Success](screenshots/06-post-success.png)
 
-### ▶ Update Task (`PUT /tasks/{id}`)
+**Validation Error**
 
-📸 Success  
-`screenshots/08-put-success.png`
-
-📸 Error  
-`screenshots/09-put-error.png`
+![Create Task Error](screenshots/07-post-error.png)
 
 ---
 
-### ▶ Delete Task (`DELETE /tasks/{id}`)
+### 2️⃣ Get All Tasks (GET `/tasks`)
 
-📸 Success  
-`screenshots/01-delete-success.png`
-
-📸 Not Found  
-`screenshots/02-delete-error.png`
+![Get All Tasks](screenshots/03-get-all-success.png)
 
 ---
 
-## 📚 Pagination Examples (`GET /tasks?page=x&size=y`)
+### 3️⃣ Get Task By ID (GET `/tasks/{id}`)
 
-📸 Get All By Page  
-`screenshots/getAllByPage.png`
+**Success**
 
-📸 Get All By Pages  
-`screenshots/getAllByPages.png`
+![Get Task By ID Success](screenshots/04-get-by-id-success.png)
 
-📸 Pageable Response  
-`screenshots/getAllTasksByPageable.png`
+**Not Found**
+
+![Get Task By ID Error](screenshots/05-get-by-id-error.png)
+
+---
+
+### 4️⃣ Update Task (PUT `/tasks/{id}`)
+
+**Success**
+
+![Update Task Success](screenshots/08-put-success.png)
+
+**Not Found**
+
+![Update Task Error](screenshots/09-put-error.png)
+
+---
+
+### 5️⃣ Delete Task (DELETE `/tasks/{id}`)
+
+**Success**
+
+![Delete Task Success](screenshots/01-delete-success.png)
+
+**Not Found**
+
+![Delete Task Error](screenshots/02-delete-error.png)
+
+---
+
+### 6️⃣ Pagination (GET `/tasks?page=x&size=y`)
+
+**Tasks for a specific page**
+
+![Get All Tasks By Page](screenshots/10-get-all-by-page.png)
+
+**All available pages metadata**
+
+![Get All Pages](screenshots/11-get-all-pages.png)
+
+**Pageable style response**
+
+![Get All Tasks Pageable](screenshots/12-get-all-tasks-by-pageable.png)
 
 ---
 
 ## 🧩 Model Design
 
-### `Task.java`
+### Entity: `Task`
 
-| Field        | Type          |
-|-------------|---------------|
-| id          | Long          |
-| title       | String        |
-| description | String        |
-| status      | TaskStatus    |
-| createdAt   | LocalDateTime |
-| updatedAt   | LocalDateTime |
+| Field       | Type          | Description                  |
+|------------|---------------|------------------------------|
+| id         | Long          | Primary key                  |
+| title      | String        | Task title                   |
+| description| String        | Detailed description         |
+| status     | TaskStatus    | `PENDING` or `COMPLETED`     |
+| createdAt  | LocalDateTime | Created timestamp            |
+| updatedAt  | LocalDateTime | Last updated timestamp       |
 
----
+### Enum: `TaskStatus`
 
-### `TaskStatus.java`
-
-```java
-public enum TaskStatus {
-    PENDING,
-    COMPLETED
-}
-```
+    public enum TaskStatus {
+        PENDING,
+        COMPLETED
+    }
 
 ---
 
-## ▶ Run the project
+## ▶ Running the Application
 
-```bash
-mvn spring-boot:run
-```
+Build and run using Maven:
+
+    mvn spring-boot:run
 
 Base URL:
 
-```
-http://localhost:8080
-```
+    http://localhost:8080
 
 ---
 
 ## 📌 Current Progress
 
-| Feature                      | Status       |
-|-----------------------------|-------------|
-| CRUD Operations             | ✅ Completed |
-| ResponseEntity              | ✅ Completed |
-| Validation + Custom Errors  | ✅ Completed |
-| Global Exception Handling   | ✅ Completed |
-| DTO (Request + Response)    | ✅ Completed |
-| Mapping (Entity ↔ DTO)      | ✅ Completed |
-| Postman Testing             | ✅ Completed |
-| Pagination & Sorting        | ✅ Completed |
-| Swagger Documentation       | ⏳ Next      |
-| Deployment                 | ⏳ Planned   |
+| Feature                     | Status         |
+|----------------------------|----------------|
+| CRUD Operations            | ✅ Completed    |
+| DTO (Request & Response)   | ✅ Completed    |
+| Validation + Custom Errors | ✅ Completed    |
+| Global Exception Handling  | ✅ Completed    |
+| Pagination & Sorting       | ✅ Completed    |
+| Postman Testing            | ✅ Completed    |
+| Swagger / OpenAPI Docs     | ⏳ Planned      |
+| Deployment                 | ⏳ Planned      |
 
 ---
 
-### 🏁 Summary
+## 🏁 Summary
 
-A clean, production-style Spring Boot API demonstrating real-world patterns: DTOs, validation, pagination, and consistent HTTP responses — great for portfolio and future extensions like JWT authentication and deployment.
+This project demonstrates:
+
+- Clean, layered Spring Boot architecture
+- DTO-based request and response models
+- Validation with clear, user-friendly error messages
+- Global exception handling for consistent API behavior
+- Pagination support with `page` and `size` query parameters
+- Real-world API testing using Postman with attached screenshots
 
