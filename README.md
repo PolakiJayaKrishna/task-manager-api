@@ -192,7 +192,7 @@ Response (400 Bad Request):
 
 **Pageable style response**
 
-![Get All Tasks Pageable](screenshots/12-get-all-tasks-by-pageable.png)
+![Get All Tasks Pageable](screenshots/12-get-all-by-pageable.png)
 
 ---
 
