@@ -202,6 +202,35 @@ Validation error example:
 
 ---
 
+### 7️⃣ Sorting & Pagination (GET `/tasks` with query params)
+
+You can combine **pagination** and **sorting** using query parameters like `page`, `size`, `sortBy`, and `direction`.
+
+**Example:**
+
+`GET /tasks?page=1&size=2&sortBy=createdAt&direction=desc`
+
+📸 **Page + Sort by `createdAt` (desc)**  
+![Get Tasks Page + Sort by createdAt desc](screenshots/Sort+Pagination.png)
+
+---
+
+**All tasks with sorting and pagination metadata**  
+![Get Tasks – All Pages With Sorting](screenshots/SortGetAll.png)
+
+---
+
+**Sort by `title` ASC**  
+![Get Tasks – Sort by Title ASC](screenshots/SortAsc.png)
+
+---
+
+**Sort by `title` DESC**  
+![Get Tasks – Sort by Title DESC](screenshots/SortDesc.png)
+
+
+---
+
 ## 🧩 Data Model
 
 ### Entity: `Task`
