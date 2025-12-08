@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -36,8 +37,14 @@ public class TaskService {
 
 
 
-    public List<TaskResponseDTO> findAllTask(int page , int size){
-        Pageable pageable = PageRequest.of(page, size);
+    public List<TaskResponseDTO> findAllTask(int page , int size , String sortBy , String direction){
+        Sort sort;
+        if("desc".equalsIgnoreCase(direction))
+            sort = Sort.by(sortBy).descending();
+        else
+            sort = Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, size , sort);
         Page<Task> taskPage = repository.findAll(pageable);
         List<Task> tasks = taskPage.getContent();
         List<TaskResponseDTO> responseList = new ArrayList<>();

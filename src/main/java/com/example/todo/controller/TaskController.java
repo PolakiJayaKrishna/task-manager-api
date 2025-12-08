@@ -5,10 +5,12 @@ import com.example.todo.model.Task;
 import com.example.todo.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
+
 
 @RestController
 public class TaskController {
@@ -25,9 +27,11 @@ public class TaskController {
     @GetMapping("/tasks")
     public ResponseEntity<List<TaskResponseDTO>> findAll(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size
-    ) {
-        List<TaskResponseDTO> responseList = service.findAllTask(page, size);
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "desc") String direction,
+            Sort sort) {
+        List<TaskResponseDTO> responseList = service.findAllTask(page, size , sortBy , direction);
         return ResponseEntity.ok(responseList);
     }
 
