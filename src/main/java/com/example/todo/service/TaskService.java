@@ -96,5 +96,24 @@ public class TaskService {
         dto.setUpdatedAt(task.getUpdatedAt());
         return dto;
     }
+    public List<TaskResponseDTO> searchByTitle(String title){
+        List<Task> tasks = repository.findByTitleContainingIgnoreCase(title);
+        List<TaskResponseDTO> responseList = new ArrayList<>();
+        for(Task task : tasks){
+            TaskResponseDTO dto = mapToResponseDTO(task);
+            responseList.add(dto);
+        }
+        return responseList;
+    }
+
+    public List<TaskResponseDTO> findTasksByStatus(TaskStatus status){
+        List<Task> tasks = repository.findByStatus(status);
+        List<TaskResponseDTO> responseDTOList = new ArrayList<>();
+        for(Task task : tasks){
+            TaskResponseDTO dto = mapToResponseDTO(task);
+            responseDTOList.add(dto);
+        }
+        return responseDTOList;
+    }
 
 }

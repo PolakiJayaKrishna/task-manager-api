@@ -229,6 +229,13 @@ You can combine **pagination** and **sorting** using query parameters like `page
 ![Get Tasks – Sort by Title DESC](screenshots/SortDesc.png)
 
 
+📸 **Sort + Pagination Combined (Demo)**
+![Sort + Pagination Demo](screenshots/sort-pagination-demo.png)
+
+📸 **All Tasks With Sorting – Full Pages Metadata (Demo)**
+![Sorting – All Pages Demo](screenshots/sort-all-pages-demo.png)
+
+
 ---
 
 ## 🧩 Data Model
