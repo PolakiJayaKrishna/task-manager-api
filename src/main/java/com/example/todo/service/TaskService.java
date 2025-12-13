@@ -116,4 +116,13 @@ public class TaskService {
         return responseDTOList;
     }
 
+    public TaskResponseDTO updateTaskStatus(long id , TaskStatus status){
+        Task task = repository.findById(id).orElse(null);
+        if(task == null) return null;
+        task.setStatus(status);
+        task.setUpdatedAt(LocalDateTime.now());
+        Task savedtask = repository.save(task);
+        return mapToResponseDTO(savedtask);
+    }
+
 }

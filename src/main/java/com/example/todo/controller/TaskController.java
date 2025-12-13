@@ -69,4 +69,11 @@ public class TaskController {
         List<TaskResponseDTO> result = service.findTasksByStatus(status);
         return ResponseEntity.ok(result);
     }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<TaskResponseDTO> updatedStatus(@PathVariable long id , @RequestParam TaskStatus status){
+        TaskResponseDTO updated = service.updateTaskStatus(id , status);
+        if(updated == null) return ResponseEntity.status(404).build();
+        return ResponseEntity.ok(updated);
+    }
 }
