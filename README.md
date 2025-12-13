@@ -107,89 +107,80 @@ MySQL Database
 }
 ```
 
----
-## 📷 API Demo (Postman Screenshots)
+---## 📸 API Demo (Postman Screenshots)
 
-### 1️⃣ Create Task (POST `/tasks`)
+### 1️⃣ Create Task (POST /tasks)
 
-**Success**
-![Create Task Success](screenshots/06-post-success.png)
+**Success**  
+![Create Task Success](screenshots/07-post-success.png)
 
-**Validation Error**
-![Create Task Validation Error](screenshots/07-post-error.png)
-
----
-
-### 2️⃣ Get All Tasks (GET `/tasks`)
-
-![Get All Tasks](screenshots/03-get-all-success.png)
+**Validation Error**  
+![Create Task Validation Error](screenshots/08-post-error.png)
 
 ---
 
-### 3️⃣ Get Task By ID (GET `/tasks/{id}`)
+### 2️⃣ Get All Tasks (GET /tasks)
 
-**Success**
-![Get Task By ID Success](screenshots/04-get-by-id-success.png)
-
-**Not Found**
-![Get Task By ID Not Found](screenshots/05-get-by-id-error.png)
+![Get All Tasks](screenshots/01-get-all-success.png)
 
 ---
 
-### 4️⃣ Update Task (PUT `/tasks/{id}`)
+### 3️⃣ Get Task By ID (GET /tasks/{id})
 
-**Success**
-![Update Task Success](screenshots/08-put-success.png)
+**Success**  
+![Get Task By ID Success](screenshots/02-get-by-id-success.png)
 
-**Validation / Not Found Error**
-![Update Task Error](screenshots/09-put-error.png)
-
----
-
-### 5️⃣ Delete Task (DELETE `/tasks/{id}`)
-
-**Success**
-![Delete Task Success](screenshots/01-delete-success.png)
-
-**Not Found**
-![Delete Task Error](screenshots/02-delete-error.png)
+**Not Found**  
+![Get Task By ID Not Found](screenshots/03-get-by-id-error.png)
 
 ---
 
-### 6️⃣ Pagination (GET `/tasks?page=x&size=y`)
+### 4️⃣ Update Task (PUT /tasks/{id})
 
-**Single Page Result**
-![Pagination – Page Result](screenshots/10-get-all-by-page.png)
+**Success**  
+![Update Task Success](screenshots/09-put-success.png)
 
-**All Pages Metadata**
-![Pagination – All Pages](screenshots/11-get-all-pages.png)
-
-**Pageable Response**
-![Pagination – Pageable Style](screenshots/12-get-all-by-pageable.png)
+**Error**  
+![Update Task Error](screenshots/10-put-error.png)
 
 ---
 
-### 7️⃣ Sorting & Pagination Combined
+### 5️⃣ Delete Task (DELETE /tasks/{id})
 
-**Sort + Pagination**
-![Sort + Pagination](screenshots/Sort+Pagination.png)
+**Success**  
+![Delete Task Success](screenshots/05-delete-success.png)
 
-**Sort by Title (ASC)**
-![Sort Title ASC](screenshots/SortAsc.png)
-
-**Sort by Title (DESC)**
-![Sort Title DESC](screenshots/SortDesc.png)
-
-**Get All Tasks With Sorting**
-![Sort Get All](screenshots/SortGetAll.png)
+**Not Found**  
+![Delete Task Error](screenshots/06-delete-error.png)
 
 ---
 
-### 8️⃣ Partial Update – Status Only (PATCH `/tasks/{id}/status`)
+### 6️⃣ Pagination (GET /tasks?page=x&size=y)
 
-**Status Update Success**
-![Patch Status Success](screenshots/PATCH.png)
+![Pagination Page](screenshots/11-pagination-page.png)  
+![Pagination Pages](screenshots/12-pagination-pages.png)  
+![Pagination Pageable](screenshots/13-pagination-pageable.png)
+
 ---
+
+### 7️⃣ Sorting & Pagination
+
+**Sort by Title (ASC)**  
+![Sort ASC](screenshots/15-sort-title-asc.png)
+
+**Sort by Title (DESC)**  
+![Sort DESC](screenshots/16-sort-title-desc.png)
+
+**Sort + Pagination**  
+![Sort Pagination](screenshots/17-sort-pagination.png)
+
+---
+
+### 8️⃣ Partial Update — Status (PATCH)
+
+![Patch Status Success](screenshots/19-patch-status-success.png)
+
+--
 
 ## 🧩 Data Model
 
